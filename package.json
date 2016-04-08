@@ -9,7 +9,7 @@
     "url": "drublic.de"
   },
   "scripts": {
-    "test": "xo && mocha"
+    "test": "mocha"
   },
   "keywords": [
     "gulp",
@@ -26,8 +26,7 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "*",
-    "xo": "*"
+    "mocha": "*"
   },
   "license": "MIT"
 }

@@ -5,7 +5,6 @@ var path = require('path');
 var through = require('through2');
 var css = require('css');
 var fs = require('fs');
-var applySourceMap = require('vinyl-sourcemaps-apply');
 
 module.exports = function (opts) {
   return through.obj(function (file, enc, cb) {

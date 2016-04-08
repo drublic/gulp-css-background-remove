@@ -9,6 +9,9 @@
 $ npm install --save-dev gulp-css-background-remove
 ```
 
+## Development and Test
+
+Please create a folder `dist` to run the tests.
 
 ## Usage
 
