@@ -1,0 +1,33 @@
+{
+  "name": "gulp-css-background-remove",
+  "version": "1.0.0",
+  "description": "Remove `background-image` from CSS file to load asynchron",
+  "main": "index.js",
+  "author": {
+    "name": "Hans Christian Reinl",
+    "email": "info@drublic.de",
+    "url": "drublic.de"
+  },
+  "scripts": {
+    "test": "xo && mocha"
+  },
+  "keywords": [
+    "gulp",
+    "gulpplugin",
+    "css",
+    "stylesheet",
+    "background-image",
+    "split",
+    "postprocess"
+  ],
+  "dependencies": {
+    "css": "^2.2.1",
+    "gulp-util": "^3.0.0",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "xo": "*"
+  },
+  "license": "MIT"
+}
