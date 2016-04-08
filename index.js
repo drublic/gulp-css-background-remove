@@ -23,7 +23,11 @@ module.exports = function (opts) {
       'background',
       'background-image'
     ];
+
+    // Default stylesheets as objects to parse with css
     var stylesheets = {
+
+      // Image rules
       images: {
         type: 'stylesheet',
         stylesheet: {
@@ -31,6 +35,8 @@ module.exports = function (opts) {
           parsingErrors: []
         }
       },
+
+      // Rules without images
       rules: {
         type: 'stylesheet',
         stylesheet: {
@@ -40,21 +46,25 @@ module.exports = function (opts) {
       }
     };
 
+    // Empty stylesheet or broken
     if (!cssObject.stylesheet || !cssObject.stylesheet.rules) {
       cb(new gutil.PluginError('gulp-css-background-remove', 'Empty or broken stylesheet'));
       return;
     }
 
+    // For each rule we find out if it's a image
     cssObject.stylesheet.rules.forEach(function (element) {
       var declaration;
+
       // Copy element
       var rule = JSON.parse(JSON.stringify(element));
+
       // Check if it has image content
       var hasImage = false;
 
       for (declaration in element.declarations) {
         if (backgroundProperties.indexOf(element.declarations[declaration].property) > -1) {
-          if (element.declarations[declaration].value.match(/.*url\((.*)\).*/) !== null) {
+          if (element.declarations[declaration].value.match(/.*url\(.*\).*/) !== null) {
             hasImage = true;
             rule.declarations = [ element.declarations[declaration] ];
             element.declarations.splice(declaration, 1);
@@ -62,6 +72,7 @@ module.exports = function (opts) {
         }
       }
 
+      // If it's an image we push the rule to the special set
       if (hasImage) {
         stylesheets.images.stylesheet.rules.push(rule);
       }
