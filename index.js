@@ -74,7 +74,7 @@ module.exports = function (opts) {
 
     // Write images file
     fs.writeFileSync(
-      path.join(__dirname, (opts.dest || ''), (opts.filename || 'image.css')),
+      path.join((opts.dest || ''), (opts.filename || 'image.css')),
       stylesheets.images
     );
 
