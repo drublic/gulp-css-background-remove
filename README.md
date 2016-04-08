@@ -1,4 +1,5 @@
-# gulp-css-background-remove
+# gulp-css-background-remove [![Build Status](https://travis-ci.org/drublic/gulp-css-background-remove.svg?branch=master)](https://travis-ci.org/drublic/gulp-css-background-remove)
+
 
 > Remove `background-image` from CSS file to load asynchron
 
