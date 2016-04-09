@@ -47,7 +47,7 @@ module.exports = function (opts) {
     };
 
     // Search regex to separate out elements
-    var regex = opts.regex || /.*url\((".*")?('.*')?\).*/;
+    var regex = opts.regex || /.*(url\((["|']?.+["|']?)?\))+.*/g;
 
     // Empty stylesheet or broken
     if (!cssObject.stylesheet || !cssObject.stylesheet.rules) {

@@ -50,7 +50,7 @@ Destination folder to write file to.
 
 Type: `Regex`
 
-Default: `/.*url\((".*")?('.*')?\).*/`
+Default: `/.*(url\((["|']?.+["|']?)?\))+.*/g`
 
 Regex to check declarations against. This enables you to move nearly every rule
 into a separate file.
