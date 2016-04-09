@@ -46,6 +46,9 @@ module.exports = function (opts) {
       }
     };
 
+    // Search regex to separate out elements
+    var regex = opts.regex || /.*url\((".*")?('.*')?\).*/;
+
     // Empty stylesheet or broken
     if (!cssObject.stylesheet || !cssObject.stylesheet.rules) {
       cb(new gutil.PluginError('gulp-css-background-remove', 'Empty or broken stylesheet'));
@@ -64,7 +67,7 @@ module.exports = function (opts) {
 
       for (declaration in element.declarations) {
         if (backgroundProperties.indexOf(element.declarations[declaration].property) > -1) {
-          if (element.declarations[declaration].value.match(/.*url\(.*\).*/) !== null) {
+          if (element.declarations[declaration].value.match(regex) !== null) {
             hasImage = true;
             rule.declarations = [ element.declarations[declaration] ];
             element.declarations.splice(declaration, 1);

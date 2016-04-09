@@ -32,17 +32,28 @@ gulp.task('default', () =>
 
 #### filename
 
-Type: `filename`
+Type: `String`
+
 Default: `image.css`
 
 File name to write images to.
 
 #### dest
 
-Type: `dest`
-Default: ``
+Type: `String`
+
+Default: empty string
 
 Destination folder to write file to.
+
+#### regex
+
+Type: `Regex`
+
+Default: `/.*url\((".*")?('.*')?\).*/`
+
+Regex to check declarations against. This enables you to move nearly every rule
+into a separate file.
 
 ## License
 
