@@ -5,9 +5,21 @@ var path = require('path');
 var through = require('through2');
 var css = require('css');
 var fs = require('fs');
+var extend = require('util')._extend;
+var File = require('vinyl');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 
 module.exports = function (opts) {
-  return through.obj(function (file, enc, cb) {
+  opts = extend({
+    filename: 'image.css',
+    dest: '',
+    writeImagesFile: true,
+    regex: /.*(url\((["|']?.+["|']?)?\))+.*/g
+  }, opts);
+  
+  var imagesContent;
+  var throughObj = through.obj(function (file, enc, cb) {
     if (file.isNull()) {
       cb(null, file);
       return;
@@ -47,7 +59,7 @@ module.exports = function (opts) {
     };
 
     // Search regex to separate out elements
-    var regex = opts.regex || /.*(url\((["|']?.+["|']?)?\))+.*/g;
+    var regex = opts.regex;
 
     // Empty stylesheet or broken
     if (!cssObject.stylesheet || !cssObject.stylesheet.rules) {
@@ -87,14 +99,33 @@ module.exports = function (opts) {
     stylesheets.images = css.stringify(stylesheets.images);
 
     // Write images file
-    fs.writeFileSync(
-      path.join((opts.dest || ''), (opts.filename || 'image.css')),
-      stylesheets.images
-    );
+    if (opts.writeImagesFile) {
+      fs.writeFileSync(
+        path.join(opts.dest, opts.filename),
+        stylesheets.images
+      );
+    }
+    imagesContent = stylesheets.images;
 
     // Return rules file
     file.contents = new Buffer(stylesheets.rules);
 
     setImmediate(cb, null, file);
+  });
+  return extend(throughObj, {
+    images: function (callback) {
+      throughObj.on('finish', function () {
+        var imagesFile = new File({
+          contents: new Buffer(imagesContent)
+        });
+        
+        callback(
+          imagesFile
+            .pipe(source(opts.filename))
+            .pipe(buffer())
+        );
+      });
+      return throughObj;
+    }
   });
 };
