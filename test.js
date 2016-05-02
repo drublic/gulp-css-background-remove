@@ -46,3 +46,23 @@ it('should not move un-url-like property to separate CSS', function (cb) {
   stream.write(generateFile('a {\n\tbackground: #ddd; color: #ddd;\n}\na {\n\tcolor: #fff;\n}'));
   stream.end();
 });
+
+it('should be possible to get a stream from the image properties', function (cb) {
+  var stream = cssBackgroundRemove({ 
+    writeImagesFile: false
+  });
+  
+  stream.images(function (imagesStream) {
+    imagesStream.on('data', function (file) {
+        assert(file.contents.toString(), 'div {\n\tbackground-image: url(image.png);\n}');
+    })
+  });
+
+  stream.on('data', function (file) {
+    assert(file.contents.toString(), 'a {\n\tbackground: #ddd; color: #ddd;\n}\na {\n\tcolor: #fff;\n}');
+  });
+
+  stream.on('end', cb);
+  stream.write(generateFile('a {\n\tbackground: #ddd; color: #ddd;\n}\na {\n\tcolor: #fff;\n}\ndiv {\n\tbackground-image: url(image.jpg);\n}'));
+  stream.end();
+});
