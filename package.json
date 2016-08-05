@@ -23,9 +23,7 @@
   "dependencies": {
     "css": "^2.2.1",
     "gulp-util": "^3.0.0",
-    "through2": "^2.0.0"
-  },
-  "devDependencies": {
+    "through2": "^2.0.0",
     "mocha": "*",
     "vinyl": "^1.1.1",
     "vinyl-buffer": "^1.0.0",
